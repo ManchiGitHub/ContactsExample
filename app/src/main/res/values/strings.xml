@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">ContactsExample</string>
+    <string name="permission_denied_explanation">Location permission was denied, but is needed for the app\'s functionality</string>
+    <string name="settings">Settings</string>
+    <string name="location_activation_denied">To you use the app, you need to turn on the location service</string>
+    <string name="find_where_am_i">Find where am I</string>
+    <string name="hello">Hello</string>
+    <string name="introduction">"This app is designed to demonstrate the essence of the second drill. There is no need to write your app exactly like this one. Be creative, and good luck! "</string>
+    <string name="continue_text">Continue</string>
+    <string name="oh_no">Oh no!</string>
+    <string name="denied_location_permission">You denied Location permission but the app needs it. Click on \'App Settings\' to open the app\'s settings and grant location permissions.</string>
+    <string name="send_your_address_to_a_contact">Send Location</string>
+    <string name="send_my_address">Send my address</string>
+    <string name="no_contacts_have_been_found">No contacts have been found.</string>
+    <string name="just_a_second_pls">Just a second please</string>
+    <string name="no_email">This user has no email address</string>
+    <string name="select_app">Select app</string>
+    <string name="share_location">Share location</string>
+    <string name="grant_access_to_contacts">Please grant access to contacts</string>
+    <string name="address_not_available">Address not available</string>
+    <string name="send_the_address">Where to send the address?</string>
+    <string name="ok">OK</string>
+    <string name="choose_app">Select app</string>
+    <string name="not_available">n/a</string>
+</resources>

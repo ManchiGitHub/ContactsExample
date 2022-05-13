@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ContactsExample</string>
+    <string name="permission_denied_explanation">הרשאת המיקום נדחתה, אך היא נחוצה לפונקציונליות של האפליקציה</string>
+    <string name="settings">הגדרות</string>
+    <string name="location_activation_denied">כדי להשתמש באפליקציה, עליך להפעיל את שירות המיקום</string>
+    <string name="find_where_am_i">מצא היכן אני</string>
+    <string name="hello">שלום</string>
+    <string name="introduction">אפליקציה זו נועדה להדגים את מהות התרגיל. אין צורך לכתוב את האפליקציה בדיוק כמו זו. היו יצירתיים, ובהצלחה!</string>
+    <string name="continue_text">הלאה</string>
+    <string name="oh_no">אוי לא!</string>
+    <string name="denied_location_permission">דחית את הרשאת מיקום אבל האפליקציה צריכה את זה. לחץ על \'הגדרות\' כדי לפתוח את הגדרות האפליקציה ולהעניק הרשאות מיקום.</string>
+    <string name="send_your_address_to_a_contact">שתף את מיקומך</string>
+    <string name="select_app">בחר אפליקציה לשליחה</string>
+    <string name="no_email">למשתמש זה אין כתובת אימייל</string>
+    <string name="just_a_second_pls">רק רגע בבקשה</string>
+    <string name="no_contacts_have_been_found">לא נמצאו אנשי קשר</string>
+    <string name="send_my_address">שלח את הכתובת שלי</string>
+    <string name="share_location">שיתוף מיקום</string>
+    <string name="grant_access_to_contacts">יש לאשר גישה לאנשי קשר</string>
+    <string name="address_not_available">לא ניתן לקבל מיקום כרגע</string>
+    <string name="send_the_address">איך לשלוח את הכתובת?</string>
+</resources>

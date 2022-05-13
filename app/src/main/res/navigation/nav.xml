@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/introductionFragment">
+
+    <fragment
+        android:id="@+id/introductionFragment"
+        tools:layout="@layout/fragment_introduction"
+        android:name="com.test.contactsexample.introduction.IntroductionFragment"
+        android:label="IntroductionFragment" >
+        <action
+            android:id="@+id/action_introduction_to_location"
+            app:destination="@id/locationFragment"
+            app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/introductionFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.test.contactsexample.location.LocationFragment"
+        android:label="fragment_location"
+        tools:layout="@layout/fragment_location" >
+        <action
+            android:id="@+id/action_location_to_locationDenied"
+            app:destination="@id/locationDeniedFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:launchSingleTop="false"
+            app:popEnterAnim="@anim/fade_in"
+            app:popUpTo="@id/locationDeniedFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_location_to_contacts"
+            app:destination="@id/contactsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationDeniedFragment"
+        tools:layout="@layout/fragment_location_denied"
+        android:name="com.test.contactsexample.location.LocationDeniedFragment"
+        android:label="LocationDeniedFragment" >
+        <action
+            android:id="@+id/action_locationDenied_to_location"
+            app:destination="@id/locationFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/locationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactsFragment"
+        tools:layout="@layout/fragment_contacts"
+        android:name="com.test.contactsexample.contacts.ContactsFragment"
+        android:label="ContactsFragment" />
+</navigation>
