@@ -30,6 +30,7 @@ class LocationUpdatesUseCaseLiveData @Inject constructor(
 
     private val locationRequest = LocationRequest.create().apply {
         interval = TimeUnit.SECONDS.toMillis(20) // This interval is inexact
+        fastestInterval = TimeUnit.SECONDS.toMillis(2)
         priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
