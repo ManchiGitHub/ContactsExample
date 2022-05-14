@@ -3,6 +3,7 @@ package com.test.contactsexample.di
 import android.content.Context
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.test.contactsexample.location.LocationUpdatesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,5 +19,10 @@ class LocationModule {
     @Singleton
     fun provideFusedLocationProviderClient(@ApplicationContext context: Context): FusedLocationProviderClient {
         return LocationServices.getFusedLocationProviderClient(context)
+    }
+
+    @Provides
+    fun provideLocationUpdatesUseCase(fusedLocationProviderClient:FusedLocationProviderClient): LocationUpdatesUseCase {
+        return LocationUpdatesUseCase(fusedLocationProviderClient)
     }
 }

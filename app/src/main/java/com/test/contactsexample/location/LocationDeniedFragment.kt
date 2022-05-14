@@ -17,9 +17,6 @@ import com.test.contactsexample.utils.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-/**
- * Created by Marko
- */
 @AndroidEntryPoint
 class LocationDeniedFragment : Fragment() {
 

@@ -6,10 +6,6 @@ import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import kotlin.coroutines.suspendCoroutine
 
-/**
- * Created by Marko
- */
-
 class ContactsPermissions(private val resultRegistry: ActivityResultRegistry) {
 
     private val handlers = mutableListOf<ActivityResultLauncher<*>>()

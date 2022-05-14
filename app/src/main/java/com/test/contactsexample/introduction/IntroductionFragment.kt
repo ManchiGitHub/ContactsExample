@@ -10,9 +10,6 @@ import com.test.contactsexample.R
 import com.test.contactsexample.databinding.FragmentIntroductionBinding
 import com.test.contactsexample.utils.autoCleared
 
-/**
- * Created by Marko
- */
 class IntroductionFragment : Fragment() {
 
     private var binding: FragmentIntroductionBinding by autoCleared()

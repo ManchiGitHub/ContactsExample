@@ -19,9 +19,6 @@ import com.test.contactsexample.utils.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-/**
- * Created by Marko
- */
 @AndroidEntryPoint
 class LocationFragment : Fragment() {
 
@@ -73,7 +70,9 @@ class LocationFragment : Fragment() {
 
         val enabled = locationHelper.enableLocation(requireContext())
 
-        if (enabled) getLocationUpdates() else {
+        if (enabled) {
+            getLocationUpdates()
+        } else {
             showLocationSnackbar((getString(R.string.location_activation_denied)))
         }
     }
@@ -83,8 +82,9 @@ class LocationFragment : Fragment() {
         // Normally I would observe a "loading" LiveData to control the refresh icon.
         binding.fragmentLocationLayout.isRefreshing = true
 
-        locationViewModel.address.observe(viewLifecycleOwner) { address ->
+        locationViewModel.addressFlow.observe(viewLifecycleOwner) { address ->
 
+            Log.d("LocationUpdatesUseCase", "getLocationUpdates: ")
             binding.fragmentLocationLayout.isRefreshing = false
 
             val bundle = Bundle().apply {
@@ -122,6 +122,7 @@ class LocationFragment : Fragment() {
         super.onStop()
         locationHelper.unregisterHandlers()
 
+        Log.d("LocationUpdatesUseCase", "onStop: ")
         // Need to dismiss manually because snackbar duration is indefinite.
         // Perhaps using an indefinite snackbar wasn't the best choice, considering I need to take care of it.
         snackbar?.let { if (it.isShown) it.dismiss() }

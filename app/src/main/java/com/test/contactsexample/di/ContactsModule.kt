@@ -7,10 +7,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-/**
- * Created by Marko
- */
-
 @Module
 @InstallIn(SingletonComponent::class)
 class ContactsModule {
