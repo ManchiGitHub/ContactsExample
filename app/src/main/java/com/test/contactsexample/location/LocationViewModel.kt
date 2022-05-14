@@ -11,7 +11,6 @@ import javax.inject.Inject
 @HiltViewModel
 class LocationViewModel @Inject constructor(
     application: Application,
-    locationUpdatesLiveData: LocationUpdatesUseCaseLiveData,
     locationUpdatesUseCase: LocationUpdatesUseCase
 ) : AndroidViewModel(application) {
 
@@ -26,9 +25,8 @@ class LocationViewModel @Inject constructor(
         // affects only preceding operators that do not have their own context.
         .flowOn(Dispatchers.IO)
 
-        // Flow behaves like sequence...
-        // This will cancel the flow.
-        .take(1)
+        // This will cancel the flow after it's done.
+//        .take(1)
 
         // Conveniently convert to liveData.
         .asLiveData()
