@@ -15,10 +15,10 @@ class LocationViewModel @Inject constructor(
     locationUpdatesUseCase: LocationUpdatesUseCase
 ) : AndroidViewModel(application) {
 
-    val address: LiveData<String> = locationUpdatesLiveData
+//    val address: LiveData<String> = locationUpdatesLiveData
 
 
-    val addressFlow = locationUpdatesUseCase.fetchUpdates()
+    val address = locationUpdatesUseCase.fetchUpdates()
 
         // Normally, At this point I would save the new location to a database.
         .map { AppUtils.resolveAddress(application, it) }

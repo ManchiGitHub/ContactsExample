@@ -81,7 +81,7 @@ class LocationFragment : Fragment() {
         // Normally I would observe a "loading" LiveData to control the refresh icon.
         binding.fragmentLocationLayout.isRefreshing = true
 
-        locationViewModel.addressFlow.observe(viewLifecycleOwner) { address ->
+        locationViewModel.address.observe(viewLifecycleOwner) { address ->
 
             binding.fragmentLocationLayout.isRefreshing = false
 
