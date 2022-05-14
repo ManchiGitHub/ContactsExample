@@ -1,9 +1,7 @@
 package com.test.contactsexample.location
 
 import android.app.Application
-import android.location.Geocoder
 import androidx.lifecycle.*
-import com.google.android.gms.location.LocationResult
 import com.test.contactsexample.utils.AppUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

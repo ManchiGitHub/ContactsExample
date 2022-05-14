@@ -3,7 +3,6 @@ package com.test.contactsexample.location
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,7 +83,6 @@ class LocationFragment : Fragment() {
 
         locationViewModel.addressFlow.observe(viewLifecycleOwner) { address ->
 
-            Log.d("LocationUpdatesUseCase", "getLocationUpdates: ")
             binding.fragmentLocationLayout.isRefreshing = false
 
             val bundle = Bundle().apply {
@@ -122,7 +120,6 @@ class LocationFragment : Fragment() {
         super.onStop()
         locationHelper.unregisterHandlers()
 
-        Log.d("LocationUpdatesUseCase", "onStop: ")
         // Need to dismiss manually because snackbar duration is indefinite.
         // Perhaps using an indefinite snackbar wasn't the best choice, considering I need to take care of it.
         snackbar?.let { if (it.isShown) it.dismiss() }
