@@ -6,6 +6,7 @@
     style="@style/base_fragment_layout_style"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#212529"
     tools:context=".location.LocationFragment">
 
     <RelativeLayout

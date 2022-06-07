@@ -11,24 +11,16 @@ import javax.inject.Inject
 @HiltViewModel
 class LocationViewModel @Inject constructor(
     application: Application,
-    locationUpdatesUseCase: LocationUpdatesUseCase
+    locationUpdatesUseCaseLiveData: LocationUpdatesUseCaseLiveData,
+    locationUpdatesUseCase: LocationUpdatesUseCase,
 ) : AndroidViewModel(application) {
 
-//    val address: LiveData<String> = locationUpdatesLiveData
+    val currentAddress = locationUpdatesUseCaseLiveData
 
+//    val address = locationUpdatesUseCase.locationUpdates
+//        .map { AppUtils.resolveAddress(application, it) }
+//        .take(10).flowOn(Dispatchers.IO).asLiveData()
 
-    val address = locationUpdatesUseCase.fetchUpdates()
-
-        // Normally, At this point I would save the new location to a database.
-        .map { AppUtils.resolveAddress(application, it) }
-
-        // affects only preceding operators that do not have their own context.
-        .flowOn(Dispatchers.IO)
-
-        // This will cancel the flow after it's done.
-//        .take(1)
-
-        // Conveniently convert to liveData.
-        .asLiveData()
-
+    val address = locationUpdatesUseCase.locationUpdates.flowOn(Dispatchers.IO).asLiveData()
 }
+

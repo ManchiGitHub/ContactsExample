@@ -5,26 +5,24 @@ import android.location.Geocoder
 import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
+import kotlin.system.measureTimeMillis
 
 class LocationUpdatesUseCaseLiveData @Inject constructor(
     @ApplicationContext context: Context,
     private val locationClient: FusedLocationProviderClient
-) : LiveData<String>() {
+) : LiveData<String>(), CoroutineScope {
 
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
-    private val geocoder : Geocoder by lazy {
+    private val geocoder: Geocoder by lazy {
         Geocoder(context)
     }
 
@@ -38,9 +36,10 @@ class LocationUpdatesUseCaseLiveData @Inject constructor(
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
 
-            // Normally, At this point I would save the new location, and observe the database, or use Flow
-            // This is just a simplification of things.
-            scope.launch(Dispatchers.IO) {
+
+            // Lint throws "Inappropriate blocking method call" on getFromLocation
+            // when launching without explicit dispatcher, even though Dispatcher.IO is the context.
+            launch(Dispatchers.IO) {
                 val addresses = geocoder.getFromLocation(
                     locationResult.lastLocation.latitude,
                     locationResult.lastLocation.longitude,
@@ -52,26 +51,52 @@ class LocationUpdatesUseCaseLiveData @Inject constructor(
         }
     }
 
+    private fun startUpdateLoop() {
+
+        val start = System.currentTimeMillis()
+        val time = measureTimeMillis {
+            launch {
+
+                var i = 1
+                repeat(50) {
+                    delay(500)
+                    postValue("address ${i++}")
+                }
+
+                Log.d("_MARKO", "${System.currentTimeMillis() - start}")
+            }
+        }
+
+    }
+
     override fun onActive() {
         super.onActive()
 
-        try {
-            locationClient.requestLocationUpdates(
-                locationRequest, locationCallback, Looper.getMainLooper()
-            )
-        } catch (unlikely: SecurityException) {
-            Log.e(TAG, "Lost location permissions. $unlikely")
+        startUpdateLoop()
 
-            value = "N/A"
-        }
+//        try {
+//            locationClient.requestLocationUpdates(
+//                locationRequest, locationCallback, Looper.getMainLooper()
+//            )
+//        } catch (unlikely: SecurityException) {
+//            Log.e(TAG, "Lost location permissions. $unlikely")
+//
+//            value = "N/A"
+//        }
     }
+
 
     override fun onInactive() {
         super.onInactive()
+        job.cancel("Geocoder was running but there are no active observers")
         locationClient.removeLocationUpdates(locationCallback)
     }
 
     companion object {
         private const val TAG = "GetLocationUseCase"
     }
+
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
 }

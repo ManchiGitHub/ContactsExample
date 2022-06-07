@@ -7,6 +7,7 @@ import com.test.contactsexample.location.LocationUpdatesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
@@ -22,6 +23,7 @@ class LocationModule {
     }
 
     @Provides
+    @Singleton
     fun provideLocationUpdatesUseCase(fusedLocationProviderClient:FusedLocationProviderClient): LocationUpdatesUseCase {
         return LocationUpdatesUseCase(fusedLocationProviderClient)
     }

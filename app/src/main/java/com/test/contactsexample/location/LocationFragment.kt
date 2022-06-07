@@ -3,6 +3,7 @@ package com.test.contactsexample.location
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,9 @@ import com.test.contactsexample.R
 import com.test.contactsexample.databinding.FragmentLocationBinding
 import com.test.contactsexample.utils.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LocationFragment : Fragment() {
@@ -28,6 +31,7 @@ class LocationFragment : Fragment() {
         LocationHelper(requireActivity().activityResultRegistry)
     }
 
+
     private var snackbar: Snackbar? = null
 
     override fun onCreateView(
@@ -35,6 +39,13 @@ class LocationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+//        val car = carFactory.createType("Diesel")
+//        Log.d("_MARKO", "fetchUpdates: ${car.drive()}")
+//        Log.d("_MARKO", "fetchUpdates: ${car.stop()}")
+//        Log.d("_MARKO", "fetchUpdates: ${car.engineInfo()}")
+//        Log.d("_MARKO", "fetchUpdates: ${car.engineType()}")
+
         binding = FragmentLocationBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -79,18 +90,26 @@ class LocationFragment : Fragment() {
     private fun getLocationUpdates() {
 
         // Normally I would observe a "loading" LiveData to control the refresh icon.
-        binding.fragmentLocationLayout.isRefreshing = true
+//        binding.fragmentLocationLayout.isRefreshing = true
+//
+////        locationViewModel.currentAddress.observe(viewLifecycleOwner) {
+////
+////        }
 
-        locationViewModel.address.observe(viewLifecycleOwner) { address ->
+        locationViewModel.address.observe(viewLifecycleOwner){
 
-            binding.fragmentLocationLayout.isRefreshing = false
-
-            val bundle = Bundle().apply {
-                putString(ContactsFragment.ADDRESS_KEY, address)
-            }
-
-            findNavController().navigate(R.id.action_location_to_contacts, bundle)
         }
+
+//        locationViewModel.address.observe(viewLifecycleOwner) { address ->
+//
+//            binding.fragmentLocationLayout.isRefreshing = false
+//
+//            val bundle = Bundle().apply {
+//                putString(ContactsFragment.ADDRESS_KEY, address)
+//            }
+//
+//            findNavController().navigate(R.id.action_location_to_contacts, bundle)
+//        }
     }
 
     private fun revealLocationButton() {
