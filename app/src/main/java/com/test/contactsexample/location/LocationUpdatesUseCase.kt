@@ -17,39 +17,39 @@ class LocationUpdatesUseCase @Inject constructor(
     private val client: FusedLocationProviderClient,
 ) {
 
-//    val locationUpdates: Flow<LocationResult> = callbackFlow {
-//
-//        val callback = object : LocationCallback() {
-//            override fun onLocationResult(locationResult: LocationResult) {
-//                super.onLocationResult(locationResult)
-//                trySend(locationResult)
-//            }
-//        }
-//
-//        startlocationUpdates(callback)
-//
-//        awaitClose {
-//            client.removeLocationUpdates(callback)
-//        }
-//
-//    }.conflate()
+    val locationUpdates: Flow<LocationResult> = callbackFlow {
 
-    val locationUpdates: Flow<String> = callbackFlow {
-        var i = 1
-
-        val start = System.currentTimeMillis()
-        repeat(50) {
-            delay(500)
-            trySend("address ${i++}")
+        val callback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                super.onLocationResult(locationResult)
+                trySend(locationResult)
+            }
         }
+
+        startlocationUpdates(callback)
 
         awaitClose {
-            Log.d("_MARKO", "${System.currentTimeMillis() - start}")
-//            client.removeLocationUpdates(callback)
+            client.removeLocationUpdates(callback)
         }
 
-
     }.conflate()
+
+//    val locationUpdates: Flow<String> = callbackFlow {
+//        var i = 1
+//
+//        val start = System.currentTimeMillis()
+//        repeat(50) {
+//            delay(500)
+//            trySend("address ${i++}")
+//        }
+//
+//        awaitClose {
+//            Log.d("_MARKO", "${System.currentTimeMillis() - start}")
+////            client.removeLocationUpdates(callback)
+//        }
+//
+//
+//    }.conflate()
 
 
     private fun startlocationUpdates(callback: LocationCallback) {
