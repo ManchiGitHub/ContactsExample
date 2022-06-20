@@ -22,6 +22,14 @@ class LocationUpdatesUseCaseLiveData @Inject constructor(
     private val locationClient: FusedLocationProviderClient
 ) : LiveData<String>(), CoroutineScope {
 
+    companion object {
+        private const val TAG = "GetLocationUseCase"
+    }
+
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
+
     private val geocoder: Geocoder by lazy {
         Geocoder(context)
     }
@@ -35,7 +43,6 @@ class LocationUpdatesUseCaseLiveData @Inject constructor(
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
-
 
             // Lint throws "Inappropriate blocking method call" on getFromLocation
             // when launching without explicit dispatcher, even though Dispatcher.IO is the context.
@@ -51,52 +58,23 @@ class LocationUpdatesUseCaseLiveData @Inject constructor(
         }
     }
 
-    private fun startUpdateLoop() {
-
-        val start = System.currentTimeMillis()
-        val time = measureTimeMillis {
-            launch {
-
-                var i = 1
-                repeat(50) {
-                    delay(500)
-                    postValue("address ${i++}")
-                }
-
-                Log.d("_MARKO", "${System.currentTimeMillis() - start}")
-            }
-        }
-
-    }
-
     override fun onActive() {
         super.onActive()
 
-        startUpdateLoop()
+        try {
+            locationClient.requestLocationUpdates(
+                locationRequest, locationCallback, Looper.getMainLooper()
+            )
+        } catch (unlikely: SecurityException) {
+            Log.e(TAG, "Lost location permissions. $unlikely")
 
-//        try {
-//            locationClient.requestLocationUpdates(
-//                locationRequest, locationCallback, Looper.getMainLooper()
-//            )
-//        } catch (unlikely: SecurityException) {
-//            Log.e(TAG, "Lost location permissions. $unlikely")
-//
-//            value = "N/A"
-//        }
+            value = "N/A"
+        }
     }
-
 
     override fun onInactive() {
         super.onInactive()
         job.cancel("Geocoder was running but there are no active observers")
         locationClient.removeLocationUpdates(locationCallback)
     }
-
-    companion object {
-        private const val TAG = "GetLocationUseCase"
-    }
-
-    private val job = SupervisorJob()
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.IO
 }

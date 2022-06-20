@@ -34,24 +34,6 @@ class LocationUpdatesUseCase @Inject constructor(
 
     }.conflate()
 
-//    val locationUpdates: Flow<String> = callbackFlow {
-//        var i = 1
-//
-//        val start = System.currentTimeMillis()
-//        repeat(50) {
-//            delay(500)
-//            trySend("address ${i++}")
-//        }
-//
-//        awaitClose {
-//            Log.d("_MARKO", "${System.currentTimeMillis() - start}")
-////            client.removeLocationUpdates(callback)
-//        }
-//
-//
-//    }.conflate()
-
-
     private fun startlocationUpdates(callback: LocationCallback) {
 
         val request = LocationRequest.create().apply {

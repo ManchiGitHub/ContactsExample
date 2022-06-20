@@ -88,28 +88,9 @@ class LocationFragment : Fragment() {
     }
 
     private fun getLocationUpdates() {
-
-        // Normally I would observe a "loading" LiveData to control the refresh icon.
-//        binding.fragmentLocationLayout.isRefreshing = true
-//
-////        locationViewModel.currentAddress.observe(viewLifecycleOwner) {
-////
-////        }
-
         locationViewModel.address.observe(viewLifecycleOwner){
-
+            //TODO: do something with address
         }
-
-//        locationViewModel.address.observe(viewLifecycleOwner) { address ->
-//
-//            binding.fragmentLocationLayout.isRefreshing = false
-//
-//            val bundle = Bundle().apply {
-//                putString(ContactsFragment.ADDRESS_KEY, address)
-//            }
-//
-//            findNavController().navigate(R.id.action_location_to_contacts, bundle)
-//        }
     }
 
     private fun revealLocationButton() {

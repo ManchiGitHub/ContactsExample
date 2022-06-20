@@ -15,12 +15,13 @@ class LocationViewModel @Inject constructor(
     locationUpdatesUseCase: LocationUpdatesUseCase,
 ) : AndroidViewModel(application) {
 
-    val currentAddress = locationUpdatesUseCaseLiveData
+//    val address = locationUpdatesUseCaseLiveData
 
     val address = locationUpdatesUseCase.locationUpdates
+        .take(1)
         .map { AppUtils.resolveAddress(application, it) }
-        .take(10).flowOn(Dispatchers.IO).asLiveData()
+        .flowOn(Dispatchers.IO)
+        .asLiveData()
 
-//    val address = locationUpdatesUseCase.locationUpdates.flowOn(Dispatchers.IO).asLiveData()
 }
 
